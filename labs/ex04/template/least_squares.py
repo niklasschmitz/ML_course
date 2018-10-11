@@ -5,6 +5,7 @@ Least Square
 """
 
 import numpy as np
+from costs import compute_mse
 
 
 def least_squares(y, tx):
@@ -14,4 +15,10 @@ def least_squares(y, tx):
     # least squares: TODO
     # returns mse, and optimal weights
     # ***************************************************
-    raise NotImplementedError
+    tx_gram = tx.T @ tx  # gram matrix
+    b = (tx.T @ y)
+    w = np.linalg.solve(tx_gram, b)
+    
+    loss = compute_mse(y, tx, w)
+    
+    return loss, w
